@@ -1,10 +1,11 @@
+import logging
+
 import numpy as np
 import torch
-from envs.JSBSim.envs import SingleCombatEnv, SingleControlEnv, MultipleCombatEnv
-from envs.env_wrappers import SubprocVecEnv, DummyVecEnv
-from envs.JSBSim.core.catalog import Catalog as c
+
 from algorithms.ppo.ppo_actor import PPOActor
-import logging
+from envs.JSBSim.envs import SingleCombatEnv
+
 logging.basicConfig(level=logging.DEBUG)
 
 class Args:
@@ -25,14 +26,21 @@ def _t2n(x):
 
 num_agents = 2
 render = True
+# todo model index
 ego_policy_index = 1040
 enm_policy_index = 0
+
 episode_rewards = 0
-ego_run_dir = "/home/lqh/jyh/CloseAirCombat/scripts/results/SingleCombat/1v1/NoWeapon/HierarchySelfplay/ppo/artillery_check/wandb/latest-run/files"
-enm_run_dir = "/home/lqh/jyh/CloseAirCombat/scripts/results/SingleCombat/1v1/NoWeapon/HierarchySelfplay/ppo/artillery_check/wandb/latest-run/files"
+
+# todo model path
+ego_run_dir = "/home/LAG/scripts/results/SingleCombat/1v1/ShootMissile/HierarchySelfplay/ppo/v1/wandb/offline-run-20251016_172249-4f4lnene/files"
+enm_run_dir = "/home/LAG/scripts/results/SingleCombat/1v1/ShootMissile/HierarchySelfplay/ppo/v1/wandb/offline-run-20251016_172249-4f4lnene/files"
+
 experiment_name = ego_run_dir.split('/')[-4]
 
-env = SingleCombatEnv("1v1/NoWeapon/Selfplay")
+# todo env name
+env = SingleCombatEnv("1v1/NoWeapon/vsBaseline")
+
 env.seed(0)
 args = Args()
 
